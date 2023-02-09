@@ -19,7 +19,7 @@ provider "azurerm" {
 }
 # Create a resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "example-resources"
+  name     = "myterraform"
   location = "West Europe"
 }
 
