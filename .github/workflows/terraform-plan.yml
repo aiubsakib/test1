@@ -33,3 +33,6 @@ jobs:
     - name: terraform Plan
       run: terraform plan 
       working-directory: ${{ env.ROOT_PATH }}
+    - name: terraform Apply
+      run: terraform apply 
+      working-directory: ${{ env.ROOT_PATH }}
