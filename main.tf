@@ -1,20 +1,26 @@
-# Configure the Microsoft Azure Provider
-provider "azurerm" {
-   version = "~> 2.29.0" 
-  features {}
-}
 terraform {
-  backend "azurerm" {
-    resource_group_name  = "rg-cloud"
-    storage_account_name = "storagecontainer88"
-    container_name       = "terraformtffile"
-    key                  = "terraform.tfstate"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.46.0"
+    }
+  }
+ backend "azurerm" {
+    resource_group_name  = "friday-demo-rg"
+    storage_account_name = "sttfstatemgt01"
+    container_name       = "tfstate"
+    key                  = "dev.terraform.tfstate"
   }
 }
-#Create Resource Group
-resource "azurerm_resource_group" "tamops" {
-  name     = "tamops"
-  location = "eastus2"
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+}
+# Create a resource group
+resource "azurerm_resource_group" "rg" {
+  name     = "example-resources"
+  location = "West Europe"
 }
 
 
