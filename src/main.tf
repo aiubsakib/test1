@@ -9,7 +9,7 @@ terraform {
     resource_group_name  = "rg-cloud"
     storage_account_name = "storagecontainer88"
     container_name       = "terraformtffile"
-    key                  = "dev.terraform.tfstate"
+    key                  = "terraform.tfstate"
   }
 }
 
