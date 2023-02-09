@@ -14,7 +14,6 @@ jobs:
   terraform_plan:
     name: 'terraform plan'
     runs-on: ubuntu-latest
-    environment: production
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -34,5 +33,7 @@ jobs:
       run: terraform plan 
       working-directory: ${{ env.ROOT_PATH }}
     - name: terraform Apply
+      run: ubuntu latest
+      environment: production
       run: terraform apply -auto-approve
       working-directory: ${{ env.ROOT_PATH }}
