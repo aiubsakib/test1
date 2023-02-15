@@ -45,6 +45,79 @@ resource "azurerm_app_service" "appservice" {
     remote_debugging_version = "VS2019"
 }
 }
+resource "azurerm_monitor_action_group" "ag" {
+  name                = "myactiongroup"
+  resource_group_name = azurerm_resource_group.rg.name
+  short_name          = "takeaction"
+  email_receiver {
+    email_address = "aiubsakib@gmail.com"
+    name = "sendtoadmin"
+  }
 
+}
+
+resource "azurerm_monitor_metric_alert" "alert" {
+  name                = "health-metricalert"
+  resource_group_name = azurerm_resource_group.rg.name
+  scopes              = [azurerm_app_service.appservice.id]
+  frequency                = "PT5M"
+  window_size              = "PT15M"
+ 
+  
+  criteria { 
+    metric_namespace = "Microsoft.Web/sites"
+    metric_name      = "Healthcheckstatus"
+    aggregation      = "Average"
+    operator         = "LessThan"
+    threshold        = 90
+    
+  }
+  action {
+    action_group_id = azurerm_monitor_action_group.ag.id
+  }
+}
+
+resource "azurerm_monitor_metric_alert" "alert88" {
+  name                = "cputime-metricalert"
+  resource_group_name = azurerm_resource_group.rg.name
+  scopes              = [azurerm_app_service.appservice.id]
+ 
+  
+  dynamic_criteria { 
+    metric_namespace = "Microsoft.Web/sites"
+    metric_name      = "CPUTime"
+    aggregation      = "Total"
+    operator         = "GreaterThan"
+    alert_sensitivity = "Low"
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.ag.id
+  }
+
+}
+
+resource "azurerm_monitor_metric_alert" "alert99" {
+  name                = "response-metricalert"
+  resource_group_name = azurerm_resource_group.rg.name
+  scopes              = [azurerm_app_service_plan.appplan.id]
+  frequency                = "PT5M"
+  window_size              = "PT15M"
+ 
+  
+  criteria { 
+    metric_namespace = "Microsoft.Web/serverfarms"
+    metric_name      = "MemoryPercentage"
+    aggregation      = "Total"
+    operator         = "GreaterThan"
+    threshold        = 80
+
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.ag.id
+  }
+
+}
 
 
